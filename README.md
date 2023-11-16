@@ -189,5 +189,7 @@ spec:
 
 ## Sharding considerations
 
+ If application controller face memory pressure due to large number of clusters, its optimal to utilize sharding of it per cluster. 
+
 ## Further Reading
 I would recommend looking into this blog post [ArgoCD Multi-Tenancy Strategy](https://medium.com/@geoffrey.muselli/argocd-multi-tenancy-strategy-94d72183c94) for a deeper dive into how to work with ArgoCD.
