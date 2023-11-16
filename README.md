@@ -12,6 +12,20 @@ ArgoCD comes with its own RBAC which should be configured appropiately based on 
 ## ArgoCD RBAC
 The [RBAC for ArgoCD](https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/#rbac-configuration) should map to the requirements of the team and organization. Commonly the focus will be about mapping teams and the ArgoCD Projects they can use for their deployments.
 
+For OpenShift GitOps, this RBAC is defined in the custom resource representing an ArgoCD instance. For example:
+### RBAC example
+```yaml
+spec:
+  rbac:
+    defaultPolicy: 'role:default'
+    policy: |
+      p, role:default, applications, *, default/*, allow
+      g, OCP-admins, role:admin
+```
+> **Note:** All authenticated users will have the default role applied to them unless given another role specifically
+
+A good practice is to restrict the default role to only meet the requirements.
+
 ## Application Controller RBAC
 
 Here is an example of how to only allow certain resources to be managed by the application controller. This needs to exist on all the remote clusters and bound to a service account ArgoCD can use.
@@ -188,8 +202,7 @@ spec:
 ```
 
 ## Sharding considerations
-
- If application controller face memory pressure due to large number of clusters, its optimal to utilize sharding of it per cluster. 
+When having a single ArgoCD controlling multiple clusters it is possible to do [sharding](https://argo-cd.readthedocs.io/en/stable/operator-manual/high_availability/#argocd-application-controller) This will generate a controller pod per shard. If the application controller faced memory pressure due to large number of clusters, it is optimal to utilize sharding. 
 
 ## Further Reading
 I would recommend looking into this blog post [ArgoCD Multi-Tenancy Strategy](https://medium.com/@geoffrey.muselli/argocd-multi-tenancy-strategy-94d72183c94) for a deeper dive into how to work with ArgoCD.
