@@ -1,7 +1,9 @@
 # Considerations for a centralized ArgoCD setup using OpenShift GitOps
 A hub and spoke setup of ArgoCD means having one or more ArgoCD instances running in a centralized location, e.g. a management or service cluster and use this instance for deployment in other clusters.
 
-![Topology](./images/centralized-topology.png)
+<p align="center">
+  <img src="./images/centralized-topology.png" alt="Topology">
+</p>
 
 In a setup that only allows for unidirectional traffic, we can configure the ArgoCD instance to allow for deploying directly to the remote clusters. In order to do this we need to give it access to the other clusters. This is done by adding a secret with the required data and label for ArgoCD to pick it up. The [documentation outlines the process](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#clusters) for this.
 
